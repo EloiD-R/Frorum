@@ -1,0 +1,291 @@
+html {
+    background-color: #629E83;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.page
+
+/* Toute la page */
+    {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+}
+
+.banner
+
+/* Header : Logo, Boutons en haut*/
+    {
+    width: 100%;
+}
+
+.header-buttons-container
+
+/* 4 boutons en haut */
+    {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.logo-container
+
+/* Grand logo (svg) */
+    {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 3%;
+}
+
+.body
+
+/* Tout ce qui n'est pas en header */
+    {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.frorums
+
+/* Onglet Frorums */
+    {
+    display: flex;
+    flex-direction: column;
+
+    width: fit-content;
+    min-width: 220px;
+    height: 100%;
+
+    margin-top: 5%;
+}
+
+.frorums-head-banner
+
+/* Encart vert en haut de l'onglet Frorums */
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-height: 7vh;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    background-color: #00A95D;
+}
+
+.frorum-head-title {
+    font-family: sans-serif;
+    color: white;
+    font-size: 150%;
+}
+
+.frorumslist-container
+
+/* Conteneur blanc de la liste de tous les frorums */
+    {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    min-height: 60vh;
+    background-color: white;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.frorum1
+
+/* 1er Frorum en partant du haut (PokemonFan) */
+    {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.forum1-icon
+
+/* Icone de .frorum1 (Tiplouf) */
+    {
+    height: fit-content;
+    margin-right: 8px;
+}
+
+.frorum1-title
+
+/* Nom du .frorum1 (PokemonFan) */
+    {
+    padding: 5px;
+
+    font-family: sans-serif;
+    font-size: 20px;
+
+    border-radius: 5px;
+
+    color: white;
+    background-color: #629E83;
+}
+
+.friends
+
+/* Onglet Frorums */
+    {
+    display: flex;
+    flex-direction: column;
+
+    width: fit-content;
+    min-width: 220px;
+    height: 100%;
+
+    margin-top: 5%;
+}
+
+.friends-head-banner
+
+/* Encart vert en haut de l'onglet Frorums */
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-height: 7vh;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    background-color: #00A95D;
+}
+
+.frorum-head-title {
+    font-family: sans-serif;
+    color: white;
+    font-size: 150%;
+}
+
+.friendlist-container
+
+/* Conteneur blanc de la liste de tous les frorums */
+    {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    min-height: 60vh;
+    background-color: white;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.timeline
+
+/* Onglet Frorums */
+    {
+    display: flex;
+    flex-direction: column;
+
+    width: 55%;
+    min-width: 220px;
+    height: 100%;
+
+    margin-top: 5%;
+}
+
+.timeline-head-banner
+
+/* Encart vert en haut de l'onglet Frorums */
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-height: 7vh;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    background-color: #00A95D;
+}
+
+.timeline-head-title {
+    font-family: sans-serif;
+    color: white;
+    font-size: 150%;
+}
+
+.timeline-message-container
+
+/* Conteneur blanc de la liste de tous les frorums */
+    {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    min-height: 60vh;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box
+}
+
+.timeline-message1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.message1pp {
+    margin-right: 8px;
+}
+
+.timeline-message1-content {
+    background-color: #629E83;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reactions{
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    margin: 2px 5px;
+    background-color: #fff;
+    justify-content: space-between;
+    align-items: flex-end;
+    
+}
+
+.message:hover .reactions img {
+    visibility: visible;
+}
+
+.message .reactions img {
+    visibility: hidden;
+}
+
+.source {
+    font-size: 10px;
+    font-family: sans-serif;
+    padding-left: 50px;
+    
+}
+
+.message-img {
+    margin-top: 5px;
+    max-width: 100%;
+}
