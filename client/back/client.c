@@ -36,7 +36,9 @@ struct sockaddr_in connectToServer(int clientSocket){
 }
 
 
-void sendMessage(int socket){
+void* sendMessage(void* arg){
+    int socket = *((int*)arg);
+
     // Send message :
     char message[MAX_BUFFER_SIZE] = "TEST";
     char buffer;
@@ -57,7 +59,9 @@ void sendMessage(int socket){
 }
 
 
-void receiveMessage(int socket){
+void* receiveMessage(void* arg){
+    int socket = *((int*)arg);
+
     // Receive message :
     char buffer[MAX_BUFFER_SIZE];
     ssize_t receiving_message_return = recv(socket, buffer, strlen(buffer), 0);

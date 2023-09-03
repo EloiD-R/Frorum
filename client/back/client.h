@@ -21,7 +21,7 @@
 // Prototypes:
 int createClientSocket();
 struct sockaddr_in connectToServer(int clientSocket);
-void sendMessage(int clientSocket);
-void receiveMessage(int clientSocket);
+void* sendMessage(void* clientSocket);
+void* receiveMessage(void*  clientSocket);
 
 #endif //CLIENT_H

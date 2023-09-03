@@ -68,9 +68,9 @@
 > // I made the TODO-LIST at a moment where i was already working on the project for a little moment, so it does not contain all the steps
 
 > - [X] make client able to receive message(s) and display them
-> - [ ] remake architecture (make code look good and be in functions)
+> - [X] remake architecture (make code look good and be in functions)
 >  - [X] client
->  - [ ] server
+>  - [X] server
 > - [ ] manage logs in a better way
 > - [ ] recode getMessage function in a better way
 > - [ ] make server resending what he receives
