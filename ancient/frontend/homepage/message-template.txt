@@ -1,0 +1,22 @@
+<div class="message">
+    <div class="reactions">
+        <div class="reactions-icons">
+            <img src="image/reactions/like-icon.svg">
+            <img src="image/reactions/dislike-icon.svg">
+            <img src="image/reactions/answer-icon.svg">
+            <img src="image/reactions/share-icon.svg">
+        </div>
+        <div class="source">Depuis le frorum : <a href="frorum.html">monfrorum</a></div>
+    </div>
+        <div class="timeline-message1">                    
+            <div class="timeline-message1-pp">
+                <img src="image/message1-user-pp.svg" class="message1pp">
+            </div>
+            <div class="timeline-message1-content">
+                Bonjour, je me présente, je suis boulanger et j’aime jouer aux jeux
+                vidéos. Mes préférés sont Assasin’s creed et Super Mario. Mes domaines de compétences sont les
+                mathématiques, la physique chimie et la cuisine. Je pratique l’esclade 2 fois par semaine.
+                Rejoingnez mon frorum !
+            </div>
+        </div>
+</div>
