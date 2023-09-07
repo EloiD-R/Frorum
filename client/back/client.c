@@ -77,3 +77,23 @@ void* receiveMessage(void* arg){
     }
     pthread_exit(NULL);
 }
+
+/*
+int writeLog(int functionReturn, char* errorMessage, int socket){
+    if(functionReturn == -1){
+        perror(errorMessage);
+        close(socket);
+        exit(EXIT_FAILURE);
+    }
+
+}
+
+    writeLog(receiving_message_return, "Error while receiving", socket);
+
+    writeLog(sent_message, "Error while sending", socket);
+
+    writeLog(client_connection_return, "Error while connecting", clientSocket);
+
+    writeLog(client_socket, "Error while creating socket", client_socket);
+
+*/
