@@ -9,11 +9,13 @@
     #include <arpa/inet.h>
     #include <sys/socket.h>
     #include <pthread.h>
+    #include <errno.h>
+    #include <time.h>
 
 // Defines :
     // Server IP and PORT.
     #define SERVER_IP "127.0.0.1"
-    #define PORT 8080
+    #define PORT 8081
 
     // Max message length.
     #define MAX_BUFFER_SIZE 1024
@@ -23,5 +25,6 @@ int createClientSocket();
 struct sockaddr_in connectToServer(int clientSocket);
 void* sendMessage(void* clientSocket);
 void* receiveMessage(void*  clientSocket);
+int writeLog(int functionReturn, char* logMessage, int socket, int flag);
 
 #endif //CLIENT_H

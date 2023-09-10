@@ -2,92 +2,162 @@
 
 
 int createServerSocket(){
-    // Create socket and check if it did it well, if not close the program.
-    int server_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if(server_socket == -1) {
-        perror("Error while creating socket");
-        close(server_socket);
-        exit(EXIT_FAILURE);
+    // Create socket and check if it did it well, if not write it in logs and close program.
+    int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+
+    // Manage errors
+    if(serverSocket == NETWORK_FUNCTIONS_ERROR_CODE){
+        writeLog("Error while creating socket", ERROR);
+        return ERROR;
     } else{
-        printf("Socket created successfully");
+        writeLog( "Created successfully socket", LOG);
+        return serverSocket;
     }
-    return server_socket;
 }
 
 
 struct sockaddr_in createServerSockaddr_inStruct(){
     // Creating a sockaddr_in struct to store the IP and PORT.
-    struct sockaddr_in server_socket_address;
-    memset(&server_socket_address, 0, sizeof(server_socket_address));
+    struct sockaddr_in serverSocket_address;
+    memset(&serverSocket_address, 0, sizeof(serverSocket_address));
 
-    server_socket_address.sin_family = AF_INET;
-    server_socket_address.sin_addr.s_addr = INADDR_ANY;
-    server_socket_address.sin_port = htons(PORT);
+    serverSocket_address.sin_family = AF_INET;
+    serverSocket_address.sin_addr.s_addr = INADDR_ANY;
+    serverSocket_address.sin_port = htons(PORT);
 
-    return server_socket_address;
+    return serverSocket_address;
 }
 
 
-void bindServerSocket(int server_socket, struct sockaddr_in server_socket_address){
+int bindServerSocket(int serverSocket, struct sockaddr_in serverSocket_address){
     // Bind socket and check if it did it well, if not close the program.
-    int server_bind_return = bind(server_socket, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address));
-    if(server_bind_return == -1) {
-        perror("Error while binding");
-        close(server_socket);
-        exit(EXIT_FAILURE);
+    int serverBindReturn = bind(serverSocket, (struct sockaddr*)&serverSocket_address, sizeof(serverSocket_address));
+    // Check if message is gone well, write result in log file.
+    if(serverBindReturn == NETWORK_FUNCTIONS_ERROR_CODE){
+        writeLog("Error while binding", ERROR);
+        return ERROR;
     } else{
-        printf("\nSocket bound successfully");
+        writeLog("Bound successfully the right port", LOG);
+        printf("Bound port successfully");
+        return 0;
     }
 }
 
 
-void listenForConnections(int server_socket){
+int listenForConnections(int serverSocket){
     // Listen for incoming connection and check if it did it well, if not close the program.
-    printf("\nListening for incoming connections [...]");
-    int server_listen_return = listen(server_socket, SOMAXCONN);
-    if(server_listen_return == -1) {
-        perror("Error while listening");
-        close(server_socket);
-        exit(EXIT_FAILURE);
+    int serverListenReturn = 1;
+    while (serverListenReturn == 1){
+        serverListenReturn = listen(serverSocket, SOMAXCONN);
+    }
+    // Check if message is gone well, write result in log file.
+    if(serverListenReturn == NETWORK_FUNCTIONS_ERROR_CODE){
+        writeLog("Error while listening", ERROR);
+        return ERROR;
     } else{
-        printf("\nSocket listened successfully and found one client.");
+        writeLog("Listened successfully and found 1 client", LOG);
+        printf("\nListened successfully and found 1 client.");
+        return 0;
     }
 }
 
 
-int acceptSocketConnection(int server_socket, struct sockaddr_in server_socket_address, socklen_t server_socket_address_length){
+int acceptSocketConnection(int serverSocket, struct sockaddr_in serverSocketAddress, socklen_t serverSocketAddressLength){
     // Accept connection and check if it did it well, if not close the program.
-    int server_accept_return = accept(server_socket, (struct sockaddr*)&server_socket_address, &server_socket_address_length);
-    if(server_accept_return == -1) {
-        perror("Error while accepting request");
-        close(server_socket);
-        exit(EXIT_FAILURE);
+    int clientSocket= accept(serverSocket, (struct sockaddr*)&serverSocketAddress, &serverSocketAddressLength);
+
+    // Check if message is gone well, write result in log file.
+    if(clientSocket == NETWORK_FUNCTIONS_ERROR_CODE){
+        writeLog("Error while accepting client", ERROR);
+        return ERROR;
     } else{
-        printf("\nA client connected successfully.");
+        writeLog("Accepted a new client successfully", LOG);
+        printf("\nNew client accepted.");
+        return clientSocket;
     }
-    return server_accept_return;
 }
 
-void receiveMessage(int server_socket, int server_accept_return){
+
+// This function is making server to receive a message from a client
+int receiveMessage(int clientSocket){
     // Create a buffer to store the received message.
-    char buffer[MAX_BUFFER_SIZE];
+    char buffer[MAX_BUFFER_SIZE] = "";
+
+    ssize_t clientMessage = 2;
 
     // Check if server received a message and if it did it well.
-    ssize_t server_receive_return = recv(server_accept_return, buffer, sizeof(buffer), 0);
-    if(server_receive_return == -1){
-        perror("receive");
-        close(server_socket);
-        close(server_accept_return);
-        exit(EXIT_FAILURE);
-    }
+    clientMessage = recv(clientSocket, buffer, sizeof(buffer), 0);
+
     // Check if client close connection.
-    if(server_receive_return == 0){
-        printf("\nClient closed connection\n");
-        close(server_socket);
-        close(server_accept_return);
-        exit(EXIT_SUCCESS);
-    } else{ // If not and a message was received, print the message.
-        buffer[server_receive_return] = '\0';
-        printf("\nReceived : \"%s\" from client", buffer);
+    if(clientMessage == 0){
+        writeLog("Client closed connection", LOG);
+        printf("\nClient closed the connection");
+        return 0;
+    } else if (clientMessage != -1){ // If not and a message was received, print the message.
+        buffer[clientMessage] = '\0';
+        printf("\nReceived : \"%s\" from client\n", buffer);
+        writeLog("Message received successfully from client", LOG);
+        return 0;
     }
+
+    // Check if message is gone well, write result in log file.
+    if(clientMessage == NETWORK_FUNCTIONS_ERROR_CODE){
+        writeLog("Error while receiving", ERROR);
+        return ERROR;
+    }
+}
+
+
+// This function is making the server to send a message to a client.
+int sendMessage(int socket, char* message){
+    // Send message :
+    int sent_message = send(socket, message, strlen(message), 0);
+
+    // Error handling :
+    if(sent_message == NETWORK_FUNCTIONS_ERROR_CODE){
+        writeLog("Error while sending", ERROR);
+        return ERROR;
+    } else{
+        writeLog("Message sent successfully to server",  LOG);
+        return 0;
+    }
+}
+
+
+// This function is called to write logs in logs.txt
+int writeLog(char* logMessage, int flag){
+    // Open the file to write logs into
+    FILE* logFile = NULL;
+    logFile = fopen("./logs.txt", "a");
+
+    // Get current timestamp.
+    time_t timestamp = time( NULL );
+
+    // Check if logs file had been opened.
+    if(logFile != NULL) {
+        // Check if the log is an error or a success.
+        if(flag == ERROR){
+            fprintf(logFile, "\n----------------------------------\nError : %s, function returned : %s, error occurred at time : %ld (timestamp)\n----------------------------------\n", strerror(errno), logMessage,  timestamp);
+            fclose(logFile);
+            return 1; // Function return code for writing successfully an error.
+        } else{
+            fprintf(logFile, "LOG : %s, occurred at time : %ld (timestamp)\n", logMessage, timestamp);
+            fclose(logFile);
+            return 0; // Function return code for writing successfully a log.
+        }
+    } else{
+        perror("opening logs file");
+        fclose(logFile);
+        return -1; // Function return code for THE error.
+    }
+}
+
+int closeProgramIfNeeded(int returnCode){
+        if(returnCode == ERROR){
+            printf("\n--------------------------------------------------\nFATAL ERROR, go check logs, program closing in 3s.\n--------------------------------------------------\n");
+            sleep(3);
+            exit(EXIT_FAILURE);
+        } else{
+            return 0; // Code for no errors
+        }
 }

@@ -1,0 +1,8 @@
+LOG : Created successfully socket, occurred at time : 1694376574 (timestamp)
+LOG : Bound successfully the right port, occurred at time : 1694376574 (timestamp)
+LOG : Listened successfully and found 1 client, occurred at time : 1694376574 (timestamp)
+LOG : Accepted a new client successfully, occurred at time : 1694376591 (timestamp)
+
+----------------------------------
+Error : Bad file descriptor, function returned : Error while receiving, error occurred at time : 1694376591 (timestamp)
+----------------------------------
